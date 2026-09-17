@@ -8,7 +8,7 @@ export function getModel(): LanguageModel {
       apiKey: process.env.GROQ_API_KEY,
       baseURL: "https://api.groq.com/openai/v1",
     });
-    return groq(process.env.GROQ_MODEL ?? "llama-3.3-70b-versatile");
+    return groq(process.env.GROQ_MODEL ?? "openai/gpt-oss-120b");
   }
 
   if (process.env.ANTHROPIC_API_KEY) {
