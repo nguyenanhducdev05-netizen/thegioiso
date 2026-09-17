@@ -30,15 +30,16 @@ export async function POST(req: Request) {
     return new Response("Invalid JSON", { status: 400 });
   }
 
+  let model;
   try {
-    getModel();
+    model = getModel();
   } catch (err) {
     const msg = err instanceof Error ? err.message : "No model";
     return new Response(msg, { status: 500 });
   }
 
   const result = streamText({
-    model: getModel(),
+    model,
     system: SYSTEM,
     messages,
     maxSteps: 8,
@@ -46,7 +47,7 @@ export async function POST(req: Request) {
       listFiles: tool({
         description: "Liệt kê file/thư mục trong workspace preview",
         parameters: z.object({
-          path: z.string().default(".").describe("Thư mục tương đối, mặc định ."),
+          path: z.string().optional().describe("Thư mục tương đối, mặc định ."),
         }),
         execute: async ({ path: rel }) => listWorkspace(rel || "."),
       }),
@@ -71,5 +72,8 @@ export async function POST(req: Request) {
     },
   });
 
-  return result.toDataStreamResponse();
+  return result.toDataStreamResponse({
+    getErrorMessage: (err) =>
+      err instanceof Error ? err.message : "AI provider request failed",
+  });
 }
