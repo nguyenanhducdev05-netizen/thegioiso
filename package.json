@@ -1,0 +1,16 @@
+{
+  "name": "thegioiso",
+  "private": true,
+  "workspaces": [
+    "apps/studio",
+    "apps/preview"
+  ],
+  "scripts": {
+    "dev": "concurrently -n studio,preview -c cyan,magenta \"npm run dev -w studio\" \"npm run dev -w preview\"",
+    "dev:studio": "npm run dev -w studio",
+    "dev:preview": "npm run dev -w preview"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
