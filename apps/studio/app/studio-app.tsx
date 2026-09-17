@@ -116,8 +116,8 @@ export function StudioApp() {
                 }
               }}
             />
-            <button type="submit" disabled={isLoading || !input.trim()} aria-label="Gửi">
-              ↑
+            <button type="submit" disabled={isLoading || !input.trim()}>
+              Gửi
             </button>
           </form>
         </div>
