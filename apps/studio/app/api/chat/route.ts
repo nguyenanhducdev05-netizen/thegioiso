@@ -47,7 +47,7 @@ export async function POST(req: Request) {
       listFiles: tool({
         description: "Liệt kê file/thư mục trong workspace preview",
         parameters: z.object({
-          path: z.string().optional().describe("Thư mục tương đối, mặc định ."),
+          path: z.string().describe("Thư mục tương đối; dùng . cho thư mục gốc."),
         }),
         execute: async ({ path: rel }) => listWorkspace(rel || "."),
       }),
